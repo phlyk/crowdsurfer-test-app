@@ -1,7 +1,15 @@
-<div class="begin-result">
-  <resultView *ngFor="let result of resultFeed"
-    [result]="result"
-    [id]="getResultId(result)">
-  </resultView>
+<!--filter-->
+<div class="filter-box">
+  <filterView class="the-filter" (onSelected)="filterResults($event)"></filterView>
 </div>
+<!--results-->
+<span class="open-button" (click)="openFilter()">open</span>
 
+<div class="begin-result" id="main">
+  <h1 class="result-title">Query Result</h1>
+  <div resultView *ngFor="let result of resultFeed"
+    [result]="result"
+    [id]="getResultId(result)"
+    class="result-card">
+  </div>
+</div>

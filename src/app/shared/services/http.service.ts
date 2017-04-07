@@ -12,22 +12,29 @@ import { Result } from 'app/shared/models/result.model';
 export class HttpService {
     private url: string = "https://s3-eu-west-1.amazonaws.com/crowdsurfer-json-dumps/blockchain-projects.json";
 
+    cachedData: Result[];
+
     constructor(private http: Http) { }
 
-    public getPromiseResults(): Promise<Result[]> {
+    public getPromiseData(): Promise<Result[]> {
         return this.http.get(this.url)
             .toPromise()
-            .then((data) => this.onResponse(data));
-            //.catch(this.onError); TODO add error catching
+            .then((data) => this.onResponse(data))
+            .catch(this.onError);
     }
 
-    public getObservableResults(): Observable<Result[]>{
-        return this.http.get(this.url)
-            .map((data) => this.onResponse(data))
-            .catch((err: Response | any) => this.onError(err));
+    public getObservableData(): Observable<Result[]> {
+        if(this.cachedData){
+            return Observable.of(this.cachedData);
+        }else{
+            return this.http.get(this.url)
+                .map(res => <Result[]>res.json())
+                .do((data) => this.cachedData = data)
+                .catch((err: Response | any) => this.onError(err));
+        }
     }
 
-    private onResponse(res: Response): Result[]{
+    private onResponse(res: Response): Result[] {
         let body = res.json();
         return body as Result[];
     }
@@ -42,21 +49,7 @@ export class HttpService {
         else {
             errText = 'Unknown server error';
         }
-
-        return Observable.throw(errText);
+        console.error(errText);
+        return errText;
     }
 }
-    /*
-   private getHttpOptions() {
-        let httpHeaders = new Headers({
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        });
-
-        let httpOptions = new RequestOptions({
-            headers: httpHeaders
-        });
-
-        return httpOptions;
-    }
-    */

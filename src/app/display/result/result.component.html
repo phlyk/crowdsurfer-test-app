@@ -1,4 +1,18 @@
 <div class="result-desc-card">
-  <p> {{id}}</p>
-  <p> {{result.description_summary}}</p>
+  <div class="title-box">
+    <p class="title"> {{result.title}} {{id}}</p>
+  </div>
+  <div class="desc-box">
+    <p> {{result.description_summary}}</p>
+  </div>
+  <div class="end-box">
+    <div class="visit-url">
+      <p class="raised">Raised {{result.raised}} / {{result.goal}}</p>
+      <a href={{result.url}}>Visit Website</a>
+    </div>
+    <button type="button" class="desc-btn"
+                (click)="openDialog()">
+            <i class="material-icons">description</i>
+    </button>
+  </div>
 </div>

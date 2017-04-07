@@ -1,0 +1,25 @@
+<div class="sidenav">
+    <a href=""> I am a filter view </a>
+    <a href=""> I am a filter view </a>
+    <a href=""> I am a filter view </a>
+    <a href=""> I am a filter view </a>
+</div>
+
+<!--d-->
+
+<md-card class="radio-card">
+    <md-radio-group class="radio-group"
+    [(value)]="choice" (change)="onChange($event)">
+        <md-radio-button class="radio-button" *ngFor="let option of options"
+        [value]="option">{{option}}</md-radio-button>
+    </md-radio-group>
+</md-card>
+<button md-raised-button class="filter-button" (click)="onFilter()">
+    <span>Filter Results</span>
+</button>
+<!--
+<md-radio-group class="radio-group" [(ngModel)]="options">
+  <md-radio-button class="radio-button" *ngFor="let option of options" [value]="option">
+    {{option}}
+  </md-radio-button>
+</md-radio-group>-->
