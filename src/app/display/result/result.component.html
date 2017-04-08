@@ -1,13 +1,18 @@
 <div class="result-desc-card">
   <div class="title-box">
-    <p class="title"> {{result.title}} {{id}}</p>
+    <p class="title"> {{result.title}} (#{{id}})</p>
   </div>
   <div class="desc-box">
-    <p> {{result.description_summary}}</p>
+    <p> {{result.description_summary}} {{result.end_time | date }}</p>
   </div>
   <div class="end-box">
     <div class="visit-url">
-      <p class="raised">Raised {{result.raised}} / {{result.goal}}</p>
+      <p class="raised" *ngIf="result.goal == 0">
+        Raised {{result.raised | currency:'GBP':true}}
+      </p>
+      <p class="raised" *ngIf="result.goal">
+        Raised {{result.raised | currency:'GBP':true}} / {{result.goal | currency:'GBP':true }}
+      </p>
       <a href={{result.url}}>Visit Website</a>
     </div>
     <button type="button" class="desc-btn"

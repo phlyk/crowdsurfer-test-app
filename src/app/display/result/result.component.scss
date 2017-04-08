@@ -1,9 +1,8 @@
 .result-desc-card {
   border: 2px solid rgb(0, 0, 0);
   border-radius: 5px;
-  max-width: 30%;
-  min-height: 300px;
-  min-width: 30%;
+  max-height: 500px;
+  max-width: 300px;
   padding: 20px;
   margin: 10px;
   background-color: rgb(235, 230, 255);
@@ -16,8 +15,7 @@
   font-variant: small-caps;
   text-align: center;
   border: thin black solid;
-  max-height: 20%;
-  overflow-y: hidden;
+  max-height: 25%;
 }
 
 .desc-box {
@@ -26,11 +24,7 @@
   text-align: justify;
 }
 
-.end-box {
-    display: inline;
-}
-
-.visit-url {
+.end-box .visit-url{
     display: inline;
 }
 

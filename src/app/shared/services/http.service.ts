@@ -24,9 +24,9 @@ export class HttpService {
     }
 
     public getObservableData(): Observable<Result[]> {
-        if(this.cachedData){
+        if (this.cachedData) {
             return Observable.of(this.cachedData);
-        }else{
+        } else {
             return this.http.get(this.url)
                 .map(res => <Result[]>res.json())
                 .do((data) => this.cachedData = data)
@@ -51,5 +51,20 @@ export class HttpService {
         }
         console.error(errText);
         return errText;
+    }
+
+    /**
+     * returns prefiltered data so the component callign the service doesn't have to
+     * @param resultsArray 
+     * affects resultsFeed with the filtered result which is then displayed
+     */
+    public filterPromiseData(choice: string): Promise<Result[]> {
+        let workingArray = this.getPromiseData()
+            .then((results) => results.filter(
+                result => {
+                    return result.funding_type === choice;
+                })
+            );
+        return workingArray;
     }
 }

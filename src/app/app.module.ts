@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import 'hammerjs';
 
-import { AppRoutingModule } from './app-routing.module';
+//import { AppRoutingModule } from './app-routing.module';
 import { DisplayModule } from './display/display.module';
 
 import { AppComponent } from './app.component';
@@ -18,7 +18,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    //AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
