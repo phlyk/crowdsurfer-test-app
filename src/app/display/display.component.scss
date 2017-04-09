@@ -1,38 +1,68 @@
-.the-filter{
-    height: 100%; /* 100% Full-height */
-    width: 20%;
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0;
-    left: 0;
-    background-color: #111; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+.the-filter {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-y: hidden;
+  padding-top: 20px;
+  border-right: thick black solid;
 }
 
-.result-box .result-card{
-    //float: left;
-    display: inline-block;
+.blank-space {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  height: 29px;
+  width: 21%;
+  z-index: 3;
+  background: rgb(17, 17, 17);
+}
+
+.result-box .result-card {
+  display: inline-block;
+  vertical-align: top;
 }
 
 .result-box {
-    //clear: left;
-}
-.result-title{
-    font-family: sans-serif;
-    font-size: 1.5em;
-    font-variant: small-caps;
-    text-align: center;
-    border-bottom: thick darkslategray solid;
-}
-
-.result-card{
-    
+  padding: 5px;
+  margin-left: 30px;
+  padding-top: 80px;
+  z-index: -1;
 }
 
 #main {
-    //transition: margin-left .5s;
-    padding: 20px;
-    margin-left: 20%;
+  margin-left: 20%;
+  margin-bottom: 20px;
+  overflow-x: hidden;
+}
+
+.top-result {
+  background-color: rgb(69, 83, 99);
+  max-height: 20%;
+  padding: 20px 40px;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  left: 0px;
+}
+
+.result-title {
+  font-family: sans-serif;
+  font-size: 1.5em;
+  font-variant: small-caps;
+  text-align: center;
+  border-bottom: thick black solid;
+  color: #818181;
+  margin: -20px -40px;
+  background: rgb(17, 17, 17);
+  left: 90px;
+  position: relative;
+}
+
+.result-title:hover{
+  color: #f1f1f1;
+  transition: 0.5s;
 }

@@ -1,6 +1,11 @@
-<h5> Reward {{id}} : </h5>
-<p> {{reward.title}} </p>
-<p> {{reward.description}} </p>
-<p> Number of backers already : {{reward.num_backers}} </p>
-<p> Amount required to pledge : {{reward.pledge}}</p>
-<p> Maximum number of rewards available : {{reward.max_available}} </p>
+<div class="reward-box">
+  <div class="reward-title">
+    <h3> Reward {{id}} : <span>{{reward.title}}</span> </h3> 
+  </div>
+  <div class="reward-desc-box">
+    <p> {{desc}} </p>
+    <p> Number of backers already : {{reward.num_backers}} </p>
+    <p> Amount required to pledge : {{reward.pledge | currency:'GBP':true}}</p>
+    <p *ngIf="reward.max_available"> Maximum number of rewards available : {{reward.max_available}} </p>
+  </div>
+</div>

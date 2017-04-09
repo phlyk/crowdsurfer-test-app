@@ -1,3 +1,9 @@
+.filter-container div{
+  width: inherit;
+  height: inherit;
+  overflow-y: hidden;
+}
+
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;

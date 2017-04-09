@@ -10,20 +10,29 @@ import { Result } from 'app/shared/models/result.model';
 
 @Injectable()
 export class HttpService {
-    private url: string = "https://s3-eu-west-1.amazonaws.com/crowdsurfer-json-dumps/blockchain-projects.json";
 
-    cachedData: Result[];
-    filteredData;
+    private url: string = "https://s3-eu-west-1.amazonaws.com/crowdsurfer-json-dumps/blockchain-projects.json"; //static url
+
+    cachedData: Result[]; //used for the Observable function
 
     constructor(private http: Http) { }
 
+    /**
+     * fetches the JSON data from the URL and return it in a Promise of results
+     * Promises do one task and one task only, they are then "done"
+     */
     public getPromiseData(): Promise<Result[]> {
         return this.http.get(this.url)
             .toPromise()
             .then((data) => this.onResponse(data))
             .catch(this.onError);
     }
-
+    /**
+     * fetches the JSON data from the url and returns it in Observable format
+     * Due to the nature of the fetch being a stagnant file and Observable was not neccesary
+     * as Observables return a stream of data that the component subscribes to
+     * If the data changes, the component subscribed to the Obserable gets updated
+     */
     public getObservableData(): Observable<Result[]> {
         if (this.cachedData) {
             return Observable.of(this.cachedData);
@@ -34,12 +43,21 @@ export class HttpService {
                 .catch((err: Response | any) => this.onError(err));
         }
     }
-
+    /**
+     * Auxiliary function to handle promise data
+     * @param res : the JSON data extracted from the URL
+     */
     private onResponse(res: Response): Result[] {
         let body = res.json();
         return body as Result[];
     }
 
+    /**
+     * Error handling if needed
+     * If the server hands us an error (unlikely) we recuperate it
+     * if not the error is "unknown"
+     * @param err : the error from the server in JSON format
+     */
     private onError(err: Response | any) {
         let errJson = err.json() || {};
         let errText;
@@ -52,74 +70,5 @@ export class HttpService {
         }
         console.error(errText);
         return errText;
-    }
-
-    /**
-     * returns prefiltered data so the component callign the service doesn't have to
-     * @param resultsArray 
-     * affects resultsFeed with the filtered result which is then displayed
-     */
-    public filterPromiseData(choiceFunding: string): Promise<Result[]> {
-        let workingArray = this.getPromiseData()
-            .then((results) => results.filter(
-                result => {
-                    return result.funding_type === choiceFunding;
-                })
-            );
-        this.filteredData = workingArray;
-        return workingArray;
-    }
-
-    public filterPromiseDataReward(searchVar: string): Promise<Result[]> {
-        let workingArray: Promise<Result[]>;
-        switch (searchVar) {
-            case 'more10':
-                workingArray = this.getPromiseData()
-                    .then((results) => results.filter(
-                        result => {
-                            if (result.rewards_list != undefined) {
-                                return result.rewards_list.length > 10;
-                            } else {
-                                return false;
-                            }
-                        }
-                    ));
-                break;
-            case 'more5':
-                workingArray = this.getPromiseData()
-                    .then((results) => results.filter(
-                        result => {
-                            if (result.rewards_list != undefined) {
-                                return result.rewards_list.length > 5;
-                            } else {
-                                return false;
-                            }
-                        }
-                    ));
-                break;
-            case 'none':
-                workingArray = this.getPromiseData()
-                    .then((results) => results.filter(
-                        result => {
-                            if (result.rewards_list == undefined) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    ));
-            default:
-                break;
-        }
-        this.filteredData = workingArray;
-        return workingArray;
-    }
-
-    public generalFilter(choiceFunding: string, choiceReward: string) {
-        let rewardFilter = this.filterPromiseDataReward(choiceReward);
-        return rewardFilter.then((rewardData) => rewardData.filter(
-            result => {
-                return result.funding_type === choiceFunding;
-            }))
-            .catch(error => console.log("general filter with this error :", error));
     }
 }

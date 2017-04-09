@@ -6,3 +6,16 @@ ul {
     padding: 0;
     margin: 0;
 }
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+  background-size: cover;
+  //background-color: rgb(221, 229, 229);
+  background: linear-gradient(to top, rgb(30, 30, 34), rgb(112, 122, 131));
+}
+
+btn:hover {
+  background-color: darken(white, 30%);
+}

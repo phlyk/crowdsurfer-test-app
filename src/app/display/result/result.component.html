@@ -1,31 +1,40 @@
 <div class="result-desc-card">
   <div class="title-box">
-    <p class="title"> {{result.title}} (#{{id}})</p>
+    <p class="title" *ngIf="!sorted">{{result.title}}</p>
+    <p class="title" *ngIf="sorted"> {{id}} - {{result.title}}</p>
   </div>
   <div class="desc-box">
-    <p> {{result.description_summary}} {{result.end_time | date }}</p>
+    <p> {{result.description_summary}}</p>
   </div>
   <div class="end-box">
-    <div class="visit-url">
+    <div class="raised-info">
       <p class="raised" *ngIf="result.goal == 0">
-        Raised {{result.raised | currency:'GBP':true}}
+        <b>Raised </b>{{result.raised | currency:'GBP':true}}
       </p>
       <p class="raised" *ngIf="result.goal">
-        Raised {{result.raised | currency:'GBP':true}} / {{result.goal | currency:'GBP':true }}
+        <b>Raised</b> {{result.raised | currency:'GBP':true}}
+        <b> / </b>{{result.goal | currency:'GBP':true }}
       </p>
-      <a href={{result.url}}>Visit Website</a>
     </div>
-    <button type="button" class="desc-btn" (click)="openDialog()">
-            <i class="material-icons">description</i>
-    </button>
-  </div>
-  <div class="extra-info-box">
-    <div class="show-more" (click)="displayMore()">
-      ...
+    <div class="show-more" (click)="displayMore()" *ngIf="!showMore">
+      More Info
     </div>
     <div class="extra-desc" *ngIf="showMore">
-      <p> This is where I'll show more</p>
-      <p> There'll be some interesting shit here </p>
+      <p *ngIf="result.end_time"><b>Ending date of offer : </b>{{result.end_time | date }}</p>
+      <p *ngIf="result.subtitle"><b>More information : </b>{{result.subtitle}} </p>
+      <p *ngIf="!result.end_time && !result.subtitle">No more information to show!</p>
     </div>
+    <div class="show-more" (click)="displayMore()" *ngIf="showMore">
+      Less Info
+    </div>
+  </div>
+  <div class="buttons">
+    <div class="visit-url btn">
+      <a md-raised-button href={{result.url}}>Interested?</a>
+    </div>
+    <button md-raised-button type="button" class="desc-btn btn" (click)="openDialog()">
+            <!--GOOGLE ICON <i class="material-icons">description</i>-->
+        Show Pledge Rewards
+      </button>
   </div>
 </div>

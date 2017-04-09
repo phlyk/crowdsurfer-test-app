@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';7
 
-import { MdSlideToggle } from '@angular/material';
+import { MdSlideToggle, MdTooltip } from '@angular/material';
 
 @Component({
     selector: '[display-sort]',
@@ -9,8 +9,10 @@ import { MdSlideToggle } from '@angular/material';
 })
 export class SortComponent implements OnInit {
     sortable: boolean = false;
+    nonSelect: boolean = false;
     @Output() readySort: EventEmitter<boolean> = new EventEmitter(true);
     @ViewChild('slider') slideToggle: MdSlideToggle;
+    @ViewChild('alert') tooltip: MdTooltip;
     selectedValue: string;
     sortOrder: string;
 
@@ -26,8 +28,9 @@ export class SortComponent implements OnInit {
 
     applySort(){
         if(this.selectedValue === undefined){
-            //alert user to choose a sort
+           this.nonSelect = true;
         }else{
+            this.nonSelect = false;
             this.slideToggle.checked? this.sortOrder = 'asc' : this.sortOrder = 'desc';
             this.readySort.emit();
         }

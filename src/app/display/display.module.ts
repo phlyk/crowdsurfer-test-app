@@ -18,6 +18,7 @@ import { FilterComponent } from './filter/filter.component';
 import { SortComponent } from './sort/sort.component';
 
 import { HttpService } from 'app/shared/services/http.service';
+import { FilterService } from 'app/shared/services/filter.service';
 import { ArraySortPipe } from './sort/array-sort.pipe';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ArraySortPipe } from './sort/array-sort.pipe';
     MaterialModule,
     MdRadioModule,
     MdDialogModule,
+    MdSelectModule,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -43,7 +45,8 @@ import { ArraySortPipe } from './sort/array-sort.pipe';
   ],
   entryComponents: [ModalComponent],
   providers: [
-    HttpService
+    HttpService,
+    FilterService
   ],
   bootstrap: [DisplayComponent]
 })

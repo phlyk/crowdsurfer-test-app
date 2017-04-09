@@ -1,26 +1,32 @@
-<!--filter-->
-<div class="filter-box">
-  <filterView #filter class="the-filter" (onSelected)="filterResults()"></filterView>
-</div>
-<!-- to open and close the filter, is this needed?
+<div class="display-container">
+  <!--filter-->
+  <div class="filter-box">
+    <div class="blank-space"></div>
+    <filterView #filter class="the-filter" (onSelected)="filterResults()"></filterView>
+  </div>
+  <!-- to open and close the filter, is this needed?
 <span class="open-button" (click)="openFilter()">open</span>-->
-<!--results-->
-<div class="begin-result" id="main">
-  <h1 class="result-title">Query Result</h1>
-  <div display-sort #sorter class="sort-box" (readySort)="applySort()"></div>
-  <!--ugly way of doing this but no choice-->
-  <div class="result-box if-sort-container" *ngIf="shouldSort">
-    <div resultView  
-      *ngFor="let result of (resultFeed | sort: [sortValue, sortOrder])"
-      [result]="result"
-      [id]="getResultId(result)"
-      class="result-card">
+  <!--results-->
+  <div class="begin-result" id="main">
+    <div class="top-result">
+      <h1 class="result-title">Query Result</h1>
+      <div display-sort #sorter class="sort-box" (readySort)="applySort()"></div>
+    </div>
+    <!--ugly way of doing this but no choice-->
+    <div class="result-container">
+      <div class="result-box if-sort-container" *ngIf="shouldSort">
+        <div resultView *ngFor="let result of (resultFeed | sort: [sortValue, sortOrder])" 
+          [result]="result" [id]="getResultId(result)"
+          [sorted]="shouldSort" class="result-card">
+        </div>
+      </div>
+      <div class="result-box if-nosort-container" *ngIf="!shouldSort">
+        <div resultView *ngFor="let result of resultFeed" [result]="result" 
+          [id]="getResultId(result)" class="result-card">
+        </div>
+      </div>
+    </div>
+    <div class="no-results" *ngIf="emptyRes">
+      <p><b>No results I'm afraid. Try using different search parametres</b></p>
     </div>
   </div>
-  <div class="result-box if-nosort-container" *ngIf="!shouldSort">
-    <div resultView *ngFor="let result of resultFeed"
-      [result]="result"
-      [id]="getResultId(result)"
-      class="result-card">
-    </div>
-</div>

@@ -1,21 +1,32 @@
+$backColour: rgb(184, 184, 186);
+$linkColour: rgb(128, 155, 188);
+
 .result-desc-card {
   border: 2px solid rgb(0, 0, 0);
   border-radius: 5px;
-  max-height: 500px;
+  max-height: 600px;
   max-width: 300px;
   padding: 20px;
   margin: 20px;
-  background-color: rgb(235, 230, 255);
+  background-color: $backColour;
   position: relative;
+  font-family: sans-serif;
+}
+
+.result-desc-card:hover{
+  background-color: lighten($backColour, 15%);
+  transition: 0.5s;
 }
 
 .title {
-  font-family: sans-serif;
   font-size: 1.5em;
   font-variant: small-caps;
   text-align: center;
-  border: thin black solid;
-  max-height: 25%;
+  padding-bottom: 10px;
+  max-height: 18vh;
+  margin: 0px 0px 10px 0px;
+  overflow-y: auto;
+  border-bottom: medium black solid;
 }
 
 .desc-box {
@@ -24,16 +35,22 @@
   text-align: justify;
 }
 
-.desc-btn {
-  float: right;
+.show-more {
+  text-align: center;
+  font-size: 0.9em;
+  margin: 0px 0px 20px 0px;
+  padding: 0px;
+  width: 100%;
+  border: 1px black solid;
   cursor: pointer;
+  transition: 0.5s;
 }
 
-.material-icons{
-  clear: both;
+.show-more:hover {
+  background-color: darken($backColour , 10%);
 }
 
-.end-box .visit-url{
+.buttons .btn{
     display: inline;
 }
 
@@ -43,24 +60,22 @@
 
 a:link,
 a:visited {
-  background-color: #f44336;
+  background-color: $linkColour;
   color: white;
-  padding: 14px 25px;
-  text-align: center;
-  display: inline-block;
+  font-size: 0.8em;
 }
 
 a:hover,
 a:active {
-  background-color: red;
+  background-color: darken($linkColour, 10%);
 }
 
-.show-more {
-  text-align: center;
-  margin: 0px;
-  padding: 0px;
-  width: 100%;
-  border: 1px black solid;
+
+.desc-btn {
+  float: right;
   cursor: pointer;
+  min-width: 40%;
+  font-size: 0.8em;
 }
+
 

@@ -1,10 +1,14 @@
 <div class="sort-container">
   <form class="form-box">
-    <md-select class="select-box" placeholder="Sort By" [(ngModel)]="selectedValue" name="choice">
+    <md-select class="select-box" placeholder="Sort By" 
+    [(ngModel)]="selectedValue" name="choice">
       <md-option *ngFor="let choice of choices" [value]="choice.value">
         {{choice.viewValue}}
       </md-option>
     </md-select>
+    <span class="tooltip" *ngIf="nonSelect">
+      Please choose a sorting field before sorting!
+    </span>
   </form>
   <div class="slider-box">
     <span class="slider-left-text"> Descending </span>
@@ -12,5 +16,7 @@
       Ascending
     </md-slide-toggle>
   </div>
-  <button md-raised-button (click)="applySort()">Apply Sort</button>
+  <button md-raised-button class="btn" (click)="applySort()">
+      Apply Sort
+  </button>
 </div>

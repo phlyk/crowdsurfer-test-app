@@ -1,34 +1,26 @@
-<div class="sidenav">
+<div class="filter-container">
+  <div class="sidenav">
     <a href=""> Filter Available Results </a>
-</div>
+  </div>
 
-<!--d-->
-<div class="filter-title-box">
+  <!--d-->
+  <div class="filter-title-box">
     <h2 class="filter filter-title">Results By Funding Type:</h2>
-</div>
-<md-card class="radio-card">
-    <md-radio-group class="radio-group filter"
-    [(value)]="choiceFunding" (change)="onChangeFunding($event)">
-        <md-radio-button class="radio-button" *ngFor="let option of optionsFunding; let i=index"
-        [value]="option">{{option}} ({{nbFundingItems[i]}})</md-radio-button>
+  </div>
+  <md-card class="radio-card">
+    <md-radio-group class="radio-group filter" [(value)]="choiceFunding" (change)="onChangeFunding($event)">
+      <md-radio-button class="radio-button" *ngFor="let option of optionsFunding; let i=index" [value]="option">{{option}} ({{nbFundingItems[i]}})</md-radio-button>
     </md-radio-group>
-</md-card>
-<div class="filter-title-box">
+  </md-card>
+  <div class="filter-title-box">
     <h2 class="filter filter-title">Results By Amount Of Rewards:</h2>
-</div>
-<md-card class="radio-card">
-    <md-radio-group class="radio-group filter"
-    [(value)]="choiceReward" (change)="onChangeReward($event)">
-        <md-radio-button class="radio-button" *ngFor="let option of optionsReward; let i=index"
-        [value]="option">{{option}} ({{nbRewardItems[i]}})</md-radio-button>
+  </div>
+  <md-card class="radio-card">
+    <md-radio-group class="radio-group filter" [(value)]="choiceReward" (change)="onChangeReward($event)">
+      <md-radio-button class="radio-button" *ngFor="let option of optionsReward; let i=index" [value]="option">{{option}} ({{nbRewardItems[i]}})</md-radio-button>
     </md-radio-group>
-</md-card>
-<button md-raised-button class="filter-button" (click)="onFilter()">
+  </md-card>
+  <button md-raised-button class="filter-button" (click)="onFilter()">
     <span>Filter Results</span>
 </button>
-<!--
-<md-radio-group class="radio-group" [(ngModel)]="options">
-  <md-radio-button class="radio-button" *ngFor="let option of options" [value]="option">
-    {{option}}
-  </md-radio-button>
-</md-radio-group>-->
+</div>

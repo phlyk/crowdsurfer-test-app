@@ -3,6 +3,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { ModalComponent } from './modal/modal.component';
 import { Result } from 'app/shared/models/result.model';
+import { Reward } from 'app/shared/models/reward.model';
 
 @Component({
   selector: '[resultView]',
@@ -14,6 +15,7 @@ export class ResultComponent implements OnInit {
 
   @Input() result: Result;
   @Input() id: number;
+  @Input() sorted: boolean = false;
   showMore: boolean = false;
 
   constructor(public dialog: MdDialog) { }
@@ -23,18 +25,35 @@ export class ResultComponent implements OnInit {
 
   openDialog() {
     let dialogRef = this.dialog.open(ModalComponent, {
-      height: '400px',
+      height: '420px',
       width: '40%',
       position: {
         left: '40%' //750px
       }
     });
     dialogRef.componentInstance.data = this.result;
-    dialogRef.componentInstance.rewards = this.result.rewards_list;
+    if (this.result.rewards_list) {
+      dialogRef.componentInstance.rewards = this.result.rewards_list
+        .sort((a: Reward, b: Reward) => {
+          if ((a.pledge == undefined) && (b.pledge == undefined)) {
+            return 0;
+          }
+          if (a.pledge == undefined) {
+            return -1
+          }
+          if (b.pledge == undefined) {
+            return 1;
+          }
+          if (a.pledge < b.pledge) {
+            return -1;
+          } else if (a.pledge > b.pledge) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+    }
     dialogRef.componentInstance.id = this.id;
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("Closed Modal here's some data :", result);
-    });
   }
 
   displayMore() {
@@ -42,12 +61,3 @@ export class ResultComponent implements OnInit {
   }
 
 }
-
-/**
- * this.dialog.open(StandardDialog, config)
-         .then(res => {
-            this.dialogRef = res;
-            this.dialogRef.componentInstance.title = title;
-            this.dialogRef.componentInstance.contents = contents;
-         });
- */

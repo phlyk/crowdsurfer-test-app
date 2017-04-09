@@ -1,13 +1,16 @@
 <div class="md-dialog">
-  <h2 md-dialog-title class="header"> Extra information on result #{{id}} </h2>
-  <md-dialog-content class="content">
+  <div class="header-box">
+    <h2 md-dialog-title class="header"> Pledge Rewards For Offer #{{id}} </h2>
+    <button md-button-raised class="exit-button" md-dialog-close>X</button>
+  </div>
+  <div md-dialog-content class="content">
     <div class="reward-box" *ngIf="rewards">
       <modal-reward class="reward-display" *ngFor="let reward of rewards" [reward]="reward" [id]="getId(reward)"></modal-reward>
     </div>
-    <p class="no-reward" *ngIf="!rewards">
-      Oh no! I'm sorry this company has no available reward system!
-    </p>
-  </md-dialog-content>
-  <!-- WTF is this? <md-dialog-actions class="actions">Buttons?</md-dialog-actions>-->
-  <button class="exit-button" md-dialog-close>X</button>
+    <div>
+      <p class="no-reward" *ngIf="!rewards">
+        Oh no! I'm sorry this company has no available reward system!
+      </p>
+    </div>
+  </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { HttpService } from 'app/shared/services/http.service';
+import { FilterService} from 'app/shared/services/filter.service';
 
 @Component({
     selector: 'filterView',
@@ -17,7 +18,8 @@ export class FilterComponent implements OnInit {
     nbRewardItems: any[] = ['X', 'X', 'X', 'X'];
     @Output() onSelected = new EventEmitter<string>();
 
-    constructor(private dataService: HttpService) { }
+    constructor(private dataService: HttpService,
+                private filterService: FilterService) { }
 
     ngOnInit() {
         this.optionsFunding = ['All Types', 'Reward Funding', 'Equity Funding'];
@@ -72,7 +74,7 @@ export class FilterComponent implements OnInit {
                 .then((res) => this.handleServiceFilterNumber(res.length, pos))
                 .catch((error) => console.error("todo"));
         } else {
-            let filteredarray = this.dataService.filterPromiseData(searchVar)
+            let filteredarray = this.filterService.filterPromiseDataFunding(searchVar)
                 .then((results) => this.handleServiceFilterNumber(results.length, pos))
                 .catch((error) => console.error("todo"));
         }
@@ -110,7 +112,7 @@ export class FilterComponent implements OnInit {
                 .then((res) => this.handleServiceFilterRewardNumber(res.length, pos))
                 .catch((error) => console.error("error with nbReward on allData"));
         } else {
-            this.dataService.filterPromiseDataReward(searchVar)
+            this.filterService.filterPromiseDataReward(searchVar)
                 .then((results) => this.handleServiceFilterRewardNumber(results.length, pos))
                 .catch((error) => console.error("error with nbReward trying to filter", searchVar, error));
         }

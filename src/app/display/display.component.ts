@@ -6,6 +6,7 @@ import { FilterComponent } from './filter/filter.component';
 
 import { Result } from 'app/shared/models/result.model';
 import { HttpService } from 'app/shared/services/http.service';
+import { FilterService } from 'app/shared/services/filter.service';
 
 @Component({
     selector: 'app-display',
@@ -18,6 +19,7 @@ export class DisplayComponent implements OnInit {
     @ViewChild('sorter') sortComponent: SortComponent;
     @ViewChild('filter') filterComponent: FilterComponent;
     shouldSort: boolean = false;
+    emptyRes: boolean = false;
     resultFeed: Result[];
     //initialFeed: Result[];
     errorMessage;
@@ -25,6 +27,7 @@ export class DisplayComponent implements OnInit {
     sortValue: string;
 
     constructor(private dataService: HttpService,
+        private filterService: FilterService,
         private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit() {
@@ -43,19 +46,23 @@ export class DisplayComponent implements OnInit {
      * @param res: the json parsed data from the HTTP get
      */
     handlePromiseData(res: Result[]) {
-        this.resultFeed = res;
-        console.log("End of data", this.resultFeed.length);
+        if (res) {
+            this.resultFeed = res;
+            this.emptyRes = false;
+            console.log("End of data", this.resultFeed.length);
+        } else {
+            this.emptyRes = true;
+        }
     }
 
     /**
-     * assigns an ID to each result, useful for debugging not displaying
+     * assigns an ID to each result, useful for debugging and displaying sort order
      */
     getResultId(result): number {
         return this.resultFeed.indexOf(result) + 1;
     }
 
     applySort() {
-
         this.sortOrder = this.sortComponent.sortOrder;
         this.sortValue = this.sortComponent.selectedValue;
         this.shouldSort = true;
@@ -65,7 +72,6 @@ export class DisplayComponent implements OnInit {
     /**
      * Filters the dataset based on the choices of the filter component
      * @param choice: the choice emitted from the filter component
-     * @return : THIS FUNCTION IS VERY FAR FROM OPTIMISED
      */
     filterResults() {
         let choiceF = this.filterComponent.choiceFunding;
@@ -84,18 +90,23 @@ export class DisplayComponent implements OnInit {
             this.filterRewardType(choiceR);
             return;
         } else {
-            this.dataService.generalFilter(choiceF, choiceR)
-            .then((filteredResults) => this.handleGeneralFilter(filteredResults))
-            .catch(error => console.error("error from data service", error));
+            this.filterService.generalFilter(choiceF, choiceR)
+                .then((filteredResults) => this.handleGeneralFilter(filteredResults))
+                .catch(error => console.error("error from data service", error));
         }
     }
 
-    handleGeneralFilter(filteredRes: void | Result []){
-        if(filteredRes){
+    handleGeneralFilter(filteredRes: void | Result[]) {
+        if (filteredRes) {
             this.resultFeed = filteredRes;
-            console.log("end of data : ",filteredRes.length);
-        }else{
-            alert("No results from filter");
+            if (filteredRes.length == 0) {
+                this.emptyRes = true;
+            }else{
+                this.emptyRes = false;
+                console.log("end of data : ", filteredRes.length);
+            }
+        } else {
+            console.error("Even when filteredRes is void it is doesn't get here");
         }
     }
 
@@ -130,13 +141,13 @@ export class DisplayComponent implements OnInit {
     }
 
     filterFundingType(searchVar: string) {
-        this.dataService.filterPromiseData(searchVar)
+        this.filterService.filterPromiseDataFunding(searchVar)
             .then((filteredResults) => this.handlePromiseData(filteredResults))
             .catch((error) => this.errorMessage = <any>error);
     }
 
     filterRewardType(searchVar: string) {
-        this.dataService.filterPromiseDataReward(searchVar)
+        this.filterService.filterPromiseDataReward(searchVar)
             .then((filteredResults) => this.handlePromiseData(filteredResults))
             .catch((error) => this.errorMessage = <any>error);
     }

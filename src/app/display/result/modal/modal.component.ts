@@ -15,11 +15,9 @@ export class ModalComponent implements OnInit {
     rewards: Reward[];
     id: number;
 
-    hasRewards: boolean;
 
     ngOnInit(){
-        this.rewards ? this.hasRewards = true : this.hasRewards = false;
-        console.log(this.id, this.hasRewards, this.rewards);
+        console.log(this.id);
     }
 
     constructor(public dialogRef: MdDialogRef<ModalComponent>){}
