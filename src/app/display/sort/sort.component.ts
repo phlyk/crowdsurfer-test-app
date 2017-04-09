@@ -1,4 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';7
+
+import { MdSlideToggle } from '@angular/material';
 
 @Component({
     selector: '[display-sort]',
@@ -8,14 +10,26 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class SortComponent implements OnInit {
     sortable: boolean = false;
     @Output() readySort: EventEmitter<boolean> = new EventEmitter(true);
-//React to an onclick event which emits a (sort) event for the display to react to
+    @ViewChild('slider') slideToggle: MdSlideToggle;
+    selectedValue: string;
+    sortOrder: string;
+
+    choices = [
+        {value: 'end_time', viewValue: 'End date'},
+        {value: 'raised', viewValue: 'Amount Raised'},
+        {value: 'more_to_come', viewValue: 'And More!'}
+    ];
+
     ngOnInit(){
+
     }
 
     applySort(){
-        //TODO specify which element to sort by
-        this.sortable = !this.sortable;
-        this.readySort.emit(this.sortable);
+        if(this.selectedValue === undefined){
+            //alert user to choose a sort
+        }else{
+            this.slideToggle.checked? this.sortOrder = 'asc' : this.sortOrder = 'desc';
+            this.readySort.emit();
+        }
     }
-
 }

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+
+import { SortComponent } from './sort/sort.component';
+import { FilterComponent } from './filter/filter.component';
 
 import { Result } from 'app/shared/models/result.model';
 import { HttpService } from 'app/shared/services/http.service';
@@ -12,16 +15,21 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class DisplayComponent implements OnInit {
 
+    @ViewChild('sorter') sortComponent: SortComponent;
+    @ViewChild('filter') filterComponent: FilterComponent;
     shouldSort: boolean = false;
     resultFeed: Result[];
+    //initialFeed: Result[];
     errorMessage;
+    sortOrder: string;
+    sortValue: string;
 
     constructor(private dataService: HttpService,
-                private changeDetectorRef:ChangeDetectorRef) { }
+        private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         this.getPromiseResults();
-        //this.getObservableResults();
+        //this.initialFeed = this.resultFeed; attempted optimisation doesn't work
     }
 
     getPromiseResults() {
@@ -46,21 +54,53 @@ export class DisplayComponent implements OnInit {
         return this.resultFeed.indexOf(result) + 1;
     }
 
-    applySort(event: boolean){
-        this.shouldSort = event;
-        console.log("I am sorting? ", this.shouldSort);
+    applySort() {
+
+        this.sortOrder = this.sortComponent.sortOrder;
+        this.sortValue = this.sortComponent.selectedValue;
+        this.shouldSort = true;
         this.changeDetectorRef.detectChanges();
-        console.log(this.resultFeed);
     }
 
     /**
-     * Filters the dataset based on funding_type 
+     * Filters the dataset based on the choices of the filter component
      * @param choice: the choice emitted from the filter component
+     * @return : THIS FUNCTION IS VERY FAR FROM OPTIMISED
      */
-    filterResults(choice: string) {
-        console.log(choice);
-        let searchVar: string;
-        let allData = false;
+    filterResults() {
+        let choiceF = this.filterComponent.choiceFunding;
+        let choiceR = this.filterComponent.choiceReward;
+        choiceF = this.turnStringIntoVariable(choiceF);
+        choiceR = this.turnStringIntoVariable(choiceR);
+        if ((choiceF == 'all') && (choiceR == 'all')) {
+            this.getPromiseResults();
+            return;
+        }
+        if (choiceR == 'all') {
+            this.filterFundingType(choiceF);
+            return;
+        }
+        if (choiceF == 'all') {
+            this.filterRewardType(choiceR);
+            return;
+        } else {
+            this.dataService.generalFilter(choiceF, choiceR)
+            .then((filteredResults) => this.handleGeneralFilter(filteredResults))
+            .catch(error => console.error("error from data service", error));
+        }
+    }
+
+    handleGeneralFilter(filteredRes: void | Result []){
+        if(filteredRes){
+            this.resultFeed = filteredRes;
+            console.log("end of data : ",filteredRes.length);
+        }else{
+            alert("No results from filter");
+        }
+    }
+
+    turnStringIntoVariable(choice: string) {
+        let searchVar;
         switch (choice) {
             case 'Reward Funding':
                 searchVar = 'R';
@@ -68,31 +108,37 @@ export class DisplayComponent implements OnInit {
             case 'Equity Funding':
                 searchVar = 'E';
                 break;
+            case '10 or more':
+                searchVar = 'more10';
+                break;
+            case '5 or more':
+                searchVar = 'more5';
+                break;
+            case 'None':
+                searchVar = 'none';
+                break;
+            case 'All Types':
+                searchVar = 'all';
+                break;
+            case 'All':
+                searchVar = 'all';
+                break;
             default:
-                allData = true;
+                break;
         }
-        if (!allData) {
-            this.dataService.filterPromiseData(searchVar)
-                .then((filteredResults) => this.handlePromiseData(filteredResults))
-                .catch((error) => this.errorMessage = <any>error);
-        } else {
-            this.getPromiseResults();
-        }
+        return searchVar;
     }
 
-    /**
- * The Observable way of getting data.
- * Observables are like streams of events and for a more complex HTTP operation
- * would be preferable to the Promises we're using thanks to their flexible nature
- * Also this creates duplicates for no reason
- */
-    /*getObservableResults() {
-        return this.dataService.getObservableData()
-            .subscribe(
-                (results) => this.handlePromiseData(results),
-                (error) => this.errorMessage = error,
-                () => console.log("yay")
-            );
-    }*/
+    filterFundingType(searchVar: string) {
+        this.dataService.filterPromiseData(searchVar)
+            .then((filteredResults) => this.handlePromiseData(filteredResults))
+            .catch((error) => this.errorMessage = <any>error);
+    }
+
+    filterRewardType(searchVar: string) {
+        this.dataService.filterPromiseDataReward(searchVar)
+            .then((filteredResults) => this.handlePromiseData(filteredResults))
+            .catch((error) => this.errorMessage = <any>error);
+    }
 
 }

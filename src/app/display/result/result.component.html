@@ -15,9 +15,17 @@
       </p>
       <a href={{result.url}}>Visit Website</a>
     </div>
-    <button type="button" class="desc-btn"
-                (click)="openDialog()">
+    <button type="button" class="desc-btn" (click)="openDialog()">
             <i class="material-icons">description</i>
     </button>
+  </div>
+  <div class="extra-info-box">
+    <div class="show-more" (click)="displayMore()">
+      ...
+    </div>
+    <div class="extra-desc" *ngIf="showMore">
+      <p> This is where I'll show more</p>
+      <p> There'll be some interesting shit here </p>
+    </div>
   </div>
 </div>

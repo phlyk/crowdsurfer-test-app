@@ -1,19 +1,26 @@
 <div class="sidenav">
-    <a href=""> I am a filter view </a>
-    <a href=""> I am a filter view </a>
-    <a href=""> I am a filter view </a>
-    <a href=""> I am a filter view </a>
+    <a href=""> Filter Available Results </a>
 </div>
 
 <!--d-->
 <div class="filter-title-box">
-    <h2 class="filter filter-title">Filter Results:</h2>
+    <h2 class="filter filter-title">Results By Funding Type:</h2>
 </div>
 <md-card class="radio-card">
     <md-radio-group class="radio-group filter"
-    [(value)]="choice" (change)="onChange($event)">
-        <md-radio-button class="radio-button" *ngFor="let option of options; let i=index"
-        [value]="option">{{option}} ({{nbItems[i]}})</md-radio-button>
+    [(value)]="choiceFunding" (change)="onChangeFunding($event)">
+        <md-radio-button class="radio-button" *ngFor="let option of optionsFunding; let i=index"
+        [value]="option">{{option}} ({{nbFundingItems[i]}})</md-radio-button>
+    </md-radio-group>
+</md-card>
+<div class="filter-title-box">
+    <h2 class="filter filter-title">Results By Amount Of Rewards:</h2>
+</div>
+<md-card class="radio-card">
+    <md-radio-group class="radio-group filter"
+    [(value)]="choiceReward" (change)="onChangeReward($event)">
+        <md-radio-button class="radio-button" *ngFor="let option of optionsReward; let i=index"
+        [value]="option">{{option}} ({{nbRewardItems[i]}})</md-radio-button>
     </md-radio-group>
 </md-card>
 <button md-raised-button class="filter-button" (click)="onFilter()">

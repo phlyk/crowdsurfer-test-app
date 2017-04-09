@@ -1,17 +1,17 @@
 <!--filter-->
 <div class="filter-box">
-  <filterView class="the-filter" (onSelected)="filterResults($event)"></filterView>
+  <filterView #filter class="the-filter" (onSelected)="filterResults()"></filterView>
 </div>
 <!-- to open and close the filter, is this needed?
 <span class="open-button" (click)="openFilter()">open</span>-->
 <!--results-->
 <div class="begin-result" id="main">
   <h1 class="result-title">Query Result</h1>
-  <div display-sort class="sort-box" (readySort)="applySort($event)"></div>
+  <div display-sort #sorter class="sort-box" (readySort)="applySort()"></div>
   <!--ugly way of doing this but no choice-->
   <div class="result-box if-sort-container" *ngIf="shouldSort">
     <div resultView  
-      *ngFor="let result of resultFeed | sort"
+      *ngFor="let result of (resultFeed | sort: [sortValue, sortOrder])"
       [result]="result"
       [id]="getResultId(result)"
       class="result-card">

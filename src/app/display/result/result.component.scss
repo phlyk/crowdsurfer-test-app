@@ -4,7 +4,7 @@
   max-height: 500px;
   max-width: 300px;
   padding: 20px;
-  margin: 10px;
+  margin: 20px;
   background-color: rgb(235, 230, 255);
   position: relative;
 }
@@ -22,6 +22,15 @@
   font-family: sans-serif;
   font-size: 1em;
   text-align: justify;
+}
+
+.desc-btn {
+  float: right;
+  cursor: pointer;
+}
+
+.material-icons{
+  clear: both;
 }
 
 .end-box .visit-url{
@@ -45,3 +54,13 @@ a:hover,
 a:active {
   background-color: red;
 }
+
+.show-more {
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  border: 1px black solid;
+  cursor: pointer;
+}
+

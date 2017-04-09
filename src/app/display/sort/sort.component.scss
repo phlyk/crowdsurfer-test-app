@@ -1,0 +1,39 @@
+.sort-container{
+    border: thin black solid;
+    margin: auto;
+    padding: 10px 40px;
+    text-align: center;
+}
+
+.form-box{
+    display: inline-block;
+    position: relative;
+    left: -25%;
+    margin: 5px;
+    padding: 5px;
+}
+
+.slider{
+    display: inline-block;
+    border: thin black solid;
+    font-family: sans-serif;
+    font-size: 1em;
+    padding-top: 10px;
+}
+
+.slider-box{
+    display: inline-block;
+    border: thin darkslategrey solid;
+    width: 20%;
+    text-align: center;
+    line-height: 10px;
+    padding: 0px 30px;
+    margin: 10px;
+}
+
+.slider-left-text{
+    line-height: -20px;
+    font-family: sans-serif;
+    font-size: 0.9em;
+    padding-bottom: 600px;
+}

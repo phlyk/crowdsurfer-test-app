@@ -13,6 +13,7 @@ export class HttpService {
     private url: string = "https://s3-eu-west-1.amazonaws.com/crowdsurfer-json-dumps/blockchain-projects.json";
 
     cachedData: Result[];
+    filteredData;
 
     constructor(private http: Http) { }
 
@@ -58,13 +59,67 @@ export class HttpService {
      * @param resultsArray 
      * affects resultsFeed with the filtered result which is then displayed
      */
-    public filterPromiseData(choice: string): Promise<Result[]> {
+    public filterPromiseData(choiceFunding: string): Promise<Result[]> {
         let workingArray = this.getPromiseData()
             .then((results) => results.filter(
                 result => {
-                    return result.funding_type === choice;
+                    return result.funding_type === choiceFunding;
                 })
             );
+        this.filteredData = workingArray;
         return workingArray;
+    }
+
+    public filterPromiseDataReward(searchVar: string): Promise<Result[]> {
+        let workingArray: Promise<Result[]>;
+        switch (searchVar) {
+            case 'more10':
+                workingArray = this.getPromiseData()
+                    .then((results) => results.filter(
+                        result => {
+                            if (result.rewards_list != undefined) {
+                                return result.rewards_list.length > 10;
+                            } else {
+                                return false;
+                            }
+                        }
+                    ));
+                break;
+            case 'more5':
+                workingArray = this.getPromiseData()
+                    .then((results) => results.filter(
+                        result => {
+                            if (result.rewards_list != undefined) {
+                                return result.rewards_list.length > 5;
+                            } else {
+                                return false;
+                            }
+                        }
+                    ));
+                break;
+            case 'none':
+                workingArray = this.getPromiseData()
+                    .then((results) => results.filter(
+                        result => {
+                            if (result.rewards_list == undefined) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    ));
+            default:
+                break;
+        }
+        this.filteredData = workingArray;
+        return workingArray;
+    }
+
+    public generalFilter(choiceFunding: string, choiceReward: string) {
+        let rewardFilter = this.filterPromiseDataReward(choiceReward);
+        return rewardFilter.then((rewardData) => rewardData.filter(
+            result => {
+                return result.funding_type === choiceFunding;
+            }))
+            .catch(error => console.log("general filter with this error :", error));
     }
 }

@@ -1,1 +1,16 @@
-<p (click)="applySort()"> Je suis une boite afin de filtrer l'univers </p>
+<div class="sort-container">
+  <form class="form-box">
+    <md-select class="select-box" placeholder="Sort By" [(ngModel)]="selectedValue" name="choice">
+      <md-option *ngFor="let choice of choices" [value]="choice.value">
+        {{choice.viewValue}}
+      </md-option>
+    </md-select>
+  </form>
+  <div class="slider-box">
+    <span class="slider-left-text"> Descending </span>
+    <md-slide-toggle #slider class="slider">
+      Ascending
+    </md-slide-toggle>
+  </div>
+  <button md-raised-button (click)="applySort()">Apply Sort</button>
+</div>
