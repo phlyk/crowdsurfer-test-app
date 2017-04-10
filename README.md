@@ -1,27 +1,41 @@
 # CrowdSurferTest
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.32.3.
+Finished result of the task I was instructed to do by CrowdSurfer, a single page results viewer of JSON data.
+When I say finished I mean as far as I got with as much time as I had, coding is a beautiful thing because you can always improve, always develop and try new things.
+I believe I completely what was asked of me to a good standard, I have worked very hard on the project and have been as thorough as I could have been.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+![alt-text](ScreenShot.jpg)
 
-## Code scaffolding
+## The Task && Structure
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+-bla components
+-bla order
+-bla lots to say
 
-## Build
+## Special Features
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+-double filter
+-filter numbers displayed
+-sort ascending/ descending array pipe
+potential rewards in modal view
+ability to extend each result
+-regex to remove `html` tags
+-no empty values/descriptions
 
-## Running unit tests
+## Known Issues
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Sadly, there were somethings I was not able to solve. Most of these 'bugs' are fairly trivial but required much time which I prioritsed elsewhere. They include:
+-Filter options numbers not always being retrieved
+-Filter options numbers not accurate when filtering on two variables
+-MdSelect placeholder not within SortComponent view, shows as partial text
+-MdDialog (modals) have an unnecessary scroll bar on longer rewards
+-colour scheme isn't fantastic, sorry about that, my design is unpracticed
+-My test doesn't pass =(
 
-## Running end-to-end tests
+## Improvements && Reflections
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+I loved this task.
+I wanted to add multiple views, routing, forms, selection
+Working tests and better error handling
+Find a way of improving the filter number issue
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
