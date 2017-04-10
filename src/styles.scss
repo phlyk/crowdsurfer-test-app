@@ -1,14 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-//@import '~@angular/material/theming.scss';
-@import './../node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css';
 
-//@import '~@angular/material/core/theming/all-theme';
-//@include md-core();
-//$primary: md-palette($md-orange, 800);
-//$accent:  md-palette($md-light-blue, 600, A100, A400);
-//$warn:    md-palette($md-red, 600);
-//$theme: md-light-theme($primary, $accent, $warn);
-//@include angular-material-theme($theme);
+@import './../node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css';
 
 ul {
     list-style: none;
@@ -21,7 +13,6 @@ body {
   margin: 0px;
   padding: 0px;
   background-size: cover;
-  //background-color: rgb(221, 229, 229);
   background: linear-gradient(to top, rgb(30, 30, 34), rgb(112, 122, 131));
 }
 
