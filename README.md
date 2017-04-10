@@ -4,7 +4,7 @@ Finished result of the task I was instructed to do by CrowdSurfer, a single page
 When I say finished I mean as far as I got with as much time as I had, coding is a beautiful thing because you can always improve, always develop and try new things.
 I believe I completely what was asked of me to a good standard, I have worked very hard on the project and have been as thorough as I could have been.
 
-![alt text](./ScreenShot.jpg)
+![alt text](./ScreenShot.png)
 
 ## The Task && Structure
 
