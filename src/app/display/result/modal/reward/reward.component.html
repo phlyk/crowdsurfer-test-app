@@ -4,8 +4,8 @@
   </div>
   <div class="reward-desc-box">
     <p> {{desc}} </p>
-    <p> Number of backers already : {{reward.num_backers}} </p>
-    <p> Amount required to pledge : {{reward.pledge | currency:'GBP':true}}</p>
+    <p *ngIf="reward.num_backers"> Number of backers already : {{reward.num_backers}} </p>
+    <p *ngIf="reward.pledge"> Amount required to pledge : {{reward.pledge | currency:'GBP':true}}</p>
     <p *ngIf="reward.max_available"> Maximum number of rewards available : {{reward.max_available}} </p>
   </div>
 </div>

@@ -7,12 +7,23 @@ import { Result } from 'app/shared/models/result.model';
   name: 'sort',
   pure: true,
 })
-
+/**
+ * The sorting mechanism assigned to the sorting feature on the display
+ */
 export class ArraySortPipe implements PipeTransform {
 
+  /**
+   * These two variables were essential to stopping Angular 2 from throwing errors that only happen in development mode.
+   * If the value is not cached or compared to the previousValue of the unfiltered array Angular's double change detection will see that something has changed
+   * This is due to Pipes changing the nature of the data very fast
+   */
   private previousValue: Array<Result>;
   private cacheResult: Array<Result>;
-
+  /**
+   * Essential Transormation function form the PipeTransform interface!
+   * @param array : the array to apply the transformation to
+   * @param args : the arugments aplied to the pipe, here they were in format ['sort_field', 'order']
+   */
   transform(array: Array<Result>, args?: any) {
     if (array === undefined) {
       return null;
@@ -28,6 +39,11 @@ export class ArraySortPipe implements PipeTransform {
     }
   }
 
+  /**
+   * Function to sort data based on which 'sort_field' (filterVar) was used.
+   * @param array : same as above
+   * @param args : same as above
+   */
   transformArrayFromArgs(array: Array<Result>, args?: Array<string>) {
     let filterVar = args[0];
     let order = args[1];
@@ -37,11 +53,14 @@ export class ArraySortPipe implements PipeTransform {
     if (filterVar == "raised") {
       return this.sortRaisedAmount(array, order);
     }
-    if (filterVar == "more_to_come") {
-      console.log("we'll do this shit later");
-    }
   }
 
+  /**
+   * The function to sort by endTime
+   * null values had to be considered as they were quite present
+   * @param array : array to sort by endTime
+   * @param order : sorting order
+   */
   sortEndTime(array: Array<Result>, order: string) {
     if (order == 'asc') {
       return array.sort((a: Result, b: Result) => {
@@ -84,6 +103,11 @@ export class ArraySortPipe implements PipeTransform {
     }
   }
 
+  /**
+   * Sorting function for amount_raised field
+   * @param array : array to sort
+   * @param order : order to sort by
+   */
   sortRaisedAmount(array: Array<Result>, order: string) {
     if (order == 'asc') {
       return array.sort((a: Result, b: Result) => {

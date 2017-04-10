@@ -6,6 +6,10 @@ import { Reward } from 'app/shared/models/reward.model';
     selector: 'modal-reward',
     templateUrl: './reward.component.html'
 })
+/**
+ * Originally was a directive but changed to component as it needed it's own structure
+ * Each RewardComponent represents an item from the 'rewards_list' JSON data
+ */
 export class RewardComponent implements OnInit {
 
     @Input() reward: Reward;

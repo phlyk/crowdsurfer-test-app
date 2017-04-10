@@ -8,19 +8,31 @@ import { FilterService} from 'app/shared/services/filter.service';
     templateUrl: './filter.component.html',
     styleUrls: ['./filter.component.scss']
 })
+
+/**
+ * The filter component is that dark fixed bar you'll see on the left of the display
+ * The component is used to register the user's filter desires and then communicate them to the display component
+ * The filter also displays how many options there are for each filter choice, but doing this is highly innefficient as it filters the data and then gets the length
+ * I can't/couldn't think of a better way of doing this
+ */
 export class FilterComponent implements OnInit {
-    //react to an onclick event (event) which is passed to the display component
+    //variables required with the funding filter
     optionsFunding: string[];
     choiceFunding: string;
+    nbFundingItems: any[] = ['X', 'X', 'X']; //dummy number so array is initalised 
+    //variables required with the reward based filter
     optionsReward: string[];
     choiceReward: string;
-    nbFundingItems: any[] = ['X', 'X', 'X']; //dummy number so array is initalised 
-    nbRewardItems: any[] = ['X', 'X', 'X', 'X'];
+    nbRewardItems: any[] = ['X', 'X', 'X', 'X']; //array needs to be initalised
+    //emit to the data
     @Output() onSelected = new EventEmitter<string>();
 
     constructor(private dataService: HttpService,
                 private filterService: FilterService) { }
 
+    /**
+     * Initialise variables after component creation
+     */
     ngOnInit() {
         this.optionsFunding = ['All Types', 'Reward Funding', 'Equity Funding'];
         this.choiceFunding = this.optionsFunding[0];
@@ -40,7 +52,7 @@ export class FilterComponent implements OnInit {
 
     /**
      * Due to an Issue with [(ngModel)] (two way data binding)
-     * I need to use this method to receive the change
+     * I need to use these methods to receive the change
      * @param event: the changed value
      */
     onChangeFunding(event) {
@@ -50,6 +62,7 @@ export class FilterComponent implements OnInit {
     onChangeReward(event){
         this.choiceReward = event.value;
     }
+
     /**
      * Function to display the number of filtered values for each radio button
      * @param choiceFunding : the choiceFunding on the radio button in string format
@@ -91,6 +104,12 @@ export class FilterComponent implements OnInit {
         this.nbFundingItems[pos] = value;
     }
 
+    /**
+     * pretty much the same as the two functions above. For the specific choiceReward you filter by it and count the number
+     * of variables available to it
+     * @param choiceReward : the choice of reward filter
+     * @param pos : the position that choice has in the nbRewardItems array
+     */
     getNbRewardFromChoice(choiceReward: string, pos: number) {
         let searchVar: string;
         let allData = false;
@@ -117,7 +136,7 @@ export class FilterComponent implements OnInit {
                 .catch((error) => console.error("error with nbReward trying to filter", searchVar, error));
         }
     }
-
+    //aux function to associate the nbRewardItems with the length from the result of the filter
     handleServiceFilterRewardNumber(value: number, pos: number) {
         this.nbRewardItems[pos] = value;
     }
