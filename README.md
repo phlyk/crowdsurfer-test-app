@@ -8,7 +8,10 @@ Here is a screenshot of how the website appears (minus a few minor css changes):
 
 ![alt text](./ScreenShot.png)
 
+(**NOTE**): Due to issues with package imports and the Material2 styling all material components have reverted back to their original styling which is a slight pink. This was not the intended colour. 
+
 Let me tell you more about how I came to this result.
+
 
 ## The Task && Structure
 
@@ -67,6 +70,6 @@ Sadly, there were somethings I was not able to solve. Most of these 'bugs' are f
 
 I loved this task.
 I wanted to add multiple views, routing, forms, selection but time got the better of me.
-Working tests and better error handling.
-Find a way of improving the filter number issue.
+Ideally I'd have Working tests and better error handling.
+Find a way of improving the filter number issue so that it doesn't query the server for each option.
 
